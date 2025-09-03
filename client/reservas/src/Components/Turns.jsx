@@ -1,13 +1,16 @@
-import axios from "axios"
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
-
+import "./Turns.css";
 
 const Turns = ({day, month, year}) => {
 
 const [allTurns, setAllTurns] = useState(null)
-const [loading, setLoading] = useState(false)
+const [loading, setLoading] = useState(true)
 const turns = ["10hs","11hs","12hs","13hs","14hs","17hs","18hs"]
+const overrides = CSS.Properties={
+    margin:"20px 0",
+};
 
 useEffect(() => {
     setLoading(true);
@@ -33,9 +36,9 @@ const getMonthName = (mon) => {
 
 const getTurnStyle = (val) => {
     if (val === ""){
-        return ({backgroundColor: "gray"})
+        return ({backgroundColor: "royalblue"})
     }
-    return ({backgroundColor: "pink"})
+    return ({backgroundColor: "dimgrey"})
 }
 
 const getTurnButtonStatus = (val) =>{
@@ -69,7 +72,7 @@ const handleClick = (index) =>{
                 const targetButton = document.getElementById(buttonID);
                 const targetTurn = document.getElementById(turnId);
                 targetButton.disabled = true;
-                targetTurn.style.backgroundColor = "pink";
+                targetTurn.style.backgroundColor = "dimgrey";
             }
         })
 }
@@ -80,13 +83,16 @@ return(
     <SyncLoader 
         color={"#04c8bb"}
         loading={loading}
+        cssOverride ={overrides}
     />
     {allTurns && (
     <ul className="listOfTurns">
         {allTurns.map((val, i) => (
             <div className="turn-container" style={getTurnStyle(val)} id={"t"+i} key={i}>
-                <div className="turn-info" >{turns[i]}</div>
-                <button className="turn-reserve" id={"b"+i} disabled={getTurnButtonStatus(val)}  onClick={() => handleClick(i)}>Reservar</button>
+                <div className="turn-wrapper">
+                    <div className="turn-info" >{turns[i]}</div>
+                    <button className="turn-reserve" id={"b"+i} disabled={getTurnButtonStatus(val)}  onClick={() => handleClick(i)}>Reservar</button>
+                </div>
             </div>
         ))}
     </ul>

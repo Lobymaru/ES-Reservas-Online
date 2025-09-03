@@ -1,9 +1,13 @@
 .calendar-container{
-    background-color: bisque;
+    background-color:rgb(81, 91, 180);
     border-radius: 10%;
 }
-
 .css-1chuxo2-MuiPickersCalendarHeader-label{
-    color:black;
+    color:aliceblue;
     font-weight: bold;
+}
+ul{
+    list-style-type: none;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
 }
