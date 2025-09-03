@@ -1,12 +1,17 @@
 import axios from "axios"
 import { useEffect, useState } from "react";
+import { SyncLoader } from "react-spinners";
+
 
 const Turns = ({day, month, year}) => {
 
 const [allTurns, setAllTurns] = useState(null)
+const [loading, setLoading] = useState(false)
 const turns = ["10hs","11hs","12hs","13hs","14hs","17hs","18hs"]
 
 useEffect(() => {
+    setLoading(true);
+    setAllTurns(null);
     const monthName = getMonthName(month);
     const trunkYear = year-2000
 
@@ -14,7 +19,8 @@ useEffect(() => {
     axios.get(import.meta.env.VITE_API_URL + "/getTurns", { 
         params: params
     }).then(async (response) => {
-        setAllTurns(response.data.turns[0])
+        setAllTurns(response.data.turns[0]);
+        setLoading(false)
     })
 }, [day, month, year])
 
@@ -71,6 +77,10 @@ const handleClick = (index) =>{
 
 return(
     <>
+    <SyncLoader 
+        color={"#04c8bb"}
+        loading={loading}
+    />
     {allTurns && (
     <ul className="listOfTurns">
         {allTurns.map((val, i) => (
